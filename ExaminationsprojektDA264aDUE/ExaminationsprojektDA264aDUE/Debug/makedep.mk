@@ -6,7 +6,7 @@ src\ASF\sam\drivers\tc\tc.c
 
 src\DelayFunctions.c
 
-src\uart.c
+src\usart0.c
 
 src\ASF\common\services\clock\sam3x\sysclk.c
 

@@ -485,10 +485,10 @@
     <Compile Include="src\DelayFunctions.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\uart.c">
+    <Compile Include="src\usart0.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\uart.h">
+    <Compile Include="src\usart0.h">
       <SubType>compile</SubType>
     </Compile>
     <None Include="src\asf.h">

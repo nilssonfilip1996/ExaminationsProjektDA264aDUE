@@ -84,7 +84,7 @@ SUBDIRS :=  \
 C_SRCS +=  \
 ../src/ASF/sam/drivers/tc/tc.c \
 ../src/DelayFunctions.c \
-../src/uart.c \
+../src/usart0.c \
 ../src/ASF/common/services/clock/sam3x/sysclk.c \
 ../src/ASF/common/utils/interrupt/interrupt_sam_nvic.c \
 ../src/ASF/sam/boards/arduino_due_x/init.c \
@@ -108,7 +108,7 @@ ASM_SRCS +=
 OBJS +=  \
 src/ASF/sam/drivers/tc/tc.o \
 src/DelayFunctions.o \
-src/uart.o \
+src/usart0.o \
 src/ASF/common/services/clock/sam3x/sysclk.o \
 src/ASF/common/utils/interrupt/interrupt_sam_nvic.o \
 src/ASF/sam/boards/arduino_due_x/init.o \
@@ -125,7 +125,7 @@ src/main.o
 OBJS_AS_ARGS +=  \
 src/ASF/sam/drivers/tc/tc.o \
 src/DelayFunctions.o \
-src/uart.o \
+src/usart0.o \
 src/ASF/common/services/clock/sam3x/sysclk.o \
 src/ASF/common/utils/interrupt/interrupt_sam_nvic.o \
 src/ASF/sam/boards/arduino_due_x/init.o \
@@ -142,7 +142,7 @@ src/main.o
 C_DEPS +=  \
 src/ASF/sam/drivers/tc/tc.d \
 src/DelayFunctions.d \
-src/uart.d \
+src/usart0.d \
 src/ASF/common/services/clock/sam3x/sysclk.d \
 src/ASF/common/utils/interrupt/interrupt_sam_nvic.d \
 src/ASF/sam/boards/arduino_due_x/init.d \
@@ -159,7 +159,7 @@ src/main.d
 C_DEPS_AS_ARGS +=  \
 src/ASF/sam/drivers/tc/tc.d \
 src/DelayFunctions.d \
-src/uart.d \
+src/usart0.d \
 src/ASF/common/services/clock/sam3x/sysclk.d \
 src/ASF/common/utils/interrupt/interrupt_sam_nvic.d \
 src/ASF/sam/boards/arduino_due_x/init.d \
