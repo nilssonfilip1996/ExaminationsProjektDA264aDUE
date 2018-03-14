@@ -52,9 +52,15 @@
  * running the ASF driver selector tool. Any changes will be discarded.
  */
 
+// From module: ADC - Analog-to-digital Converter
+#include <adc.h>
+
 // From module: Common SAM compiler driver
 #include <compiler.h>
 #include <status_codes.h>
+
+// From module: DACC - Digital-to-Analog Converter
+#include <dacc.h>
 
 // From module: GPIO - General purpose Input/Output
 #include <gpio.h>
@@ -81,11 +87,23 @@
 // From module: SAM3X startup code
 #include <exceptions.h>
 
+// From module: Standard serial I/O (stdio) - SAM implementation
+#include <stdio_serial.h>
+
 // From module: System Clock Control - SAM3X/A implementation
 #include <sysclk.h>
 
 // From module: TC - Timer Counter
 #include <tc.h>
+
+// From module: UART - Univ. Async Rec/Trans
+#include <uart.h>
+
+// From module: USART - Serial interface - SAM implementation for devices with both UART and USART
+#include <serial.h>
+
+// From module: USART - Univ. Syn Async Rec/Trans
+#include <usart.h>
 
 // From module: pio_handler support enabled
 #include <pio_handler.h>

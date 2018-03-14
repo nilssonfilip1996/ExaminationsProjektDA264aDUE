@@ -7,6 +7,7 @@
 #include "asf.h"
 #include "usart0.h"
 #include "DelayFunctions.h"
+#include "createHamming.h"
 
 //define receive parameters
 #define SYNC 0XAA// synchro signal
@@ -29,31 +30,35 @@ void usart0_init(void){
 	*ptr_USART0_MR |= (1<<CHRL1) | (1<<CHRL0);
 	*ptr_USART0_MR &= ~((1<<5) | (1<<4));
 	PIOA->PIO_PDR |= (PIO_PA10) | (PIO_PA11);
-	*ptr_USART0_BRGR |= (0b1000100011<<0);			//Set baudrate(9600). CD==0b1000100011==546
+	*ptr_USART0_BRGR |= (0b1000100010111<<0);			//Set baudrate(9600). CD==0b1000100011==546
 }
 
 void usart0_transmit(unsigned char data){
 	while(!(*ptr_USART0_SR & (1u<<1)));
-				
+	while(!(*ptr_USART0_SR & (1u<<9)));	
+	
+	
+			
 	*ptr_USART0_THR = data;
 }
 
 void usart0_send_Packet(uint8_t addr, unsigned char cmd)
 {
-	usart0_transmit(SYNC);//send synchro byte
-	delayMicroseconds(100000);
+// 	usart0_transmit(SYNC);//send synchro byte
+// 	delayMicroseconds(10000); 
 	usart0_transmit(addr);//send receiver address
-	delayMicroseconds(100000);
-	usart0_transmit(cmd);//send increment command
-	//delayMicroseconds(100000);
-	//usart0_transmit((addr+cmd));//send checksum
+	delayMicroseconds(10000);
+ 	usart0_transmit(cmd);//send command
+ 	delayMicroseconds(10000);
 }
 
 
-void usart0_putString(char* StringPtr){
+void usart0_putString(uint8_t addr,char* StringPtr){
 	while (*StringPtr != 0x00){
-		usart0_send_Packet(0x55,*StringPtr);
-		delayMicroseconds(10000);
+		usart0_send_Packet(addr,*StringPtr);
+		delayMicroseconds(1000);
 		StringPtr++;
 	}
+	//usart0_send_Packet(addr,0x00);	
+	delayMicroseconds(1000);
 }

@@ -131,9 +131,14 @@ src/usart0.d src/usart0.o: ../src/usart0.c ../src/asf.h \
  ../src/ASF/common/services/clock/sam3x/osc.h \
  ../src/ASF/sam/drivers/pmc/pmc.h ../src/ASF/common/services/clock/pll.h \
  ../src/ASF/common/services/clock/sam3x/pll.h \
- ../src/ASF/sam/drivers/pmc/sleep.h ../src/ASF/sam/drivers/tc/tc.h \
+ ../src/ASF/sam/drivers/pmc/sleep.h \
+ ../src/ASF/common/utils/stdio/stdio_serial/stdio_serial.h \
+ ../src/ASF/common/services/serial/serial.h \
+ ../src/ASF/common/services/serial/sam_uart/uart_serial.h \
+ ../src/ASF/sam/drivers/uart/uart.h ../src/ASF/sam/drivers/usart/usart.h \
+ ../src/config/conf_uart_serial.h ../src/ASF/sam/drivers/tc/tc.h \
  ../src/ASF/sam/drivers/pio/pio_handler.h ../src/usart0.h \
- ../src/DelayFunctions.h
+ ../src/DelayFunctions.h ../src/createHamming.h
 
 ../src/asf.h:
 
@@ -409,6 +414,18 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-no
 
 ../src/ASF/sam/drivers/pmc/sleep.h:
 
+../src/ASF/common/utils/stdio/stdio_serial/stdio_serial.h:
+
+../src/ASF/common/services/serial/serial.h:
+
+../src/ASF/common/services/serial/sam_uart/uart_serial.h:
+
+../src/ASF/sam/drivers/uart/uart.h:
+
+../src/ASF/sam/drivers/usart/usart.h:
+
+../src/config/conf_uart_serial.h:
+
 ../src/ASF/sam/drivers/tc/tc.h:
 
 ../src/ASF/sam/drivers/pio/pio_handler.h:
@@ -416,3 +433,5 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-no
 ../src/usart0.h:
 
 ../src/DelayFunctions.h:
+
+../src/createHamming.h:

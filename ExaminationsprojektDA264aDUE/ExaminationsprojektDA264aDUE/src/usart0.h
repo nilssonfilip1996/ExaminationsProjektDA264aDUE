@@ -13,7 +13,7 @@ void usart0_init(void);
 void usart0_transmit(unsigned char data);
 void usart0_send_Packet(uint8_t addr, unsigned char cmd);
 char usart0_receive(void);
-void usart0_putString(char* StringPtr);
+void usart0_putString(uint8_t addr,char* StringPtr);
 
 
 #endif /* UART_H_ */

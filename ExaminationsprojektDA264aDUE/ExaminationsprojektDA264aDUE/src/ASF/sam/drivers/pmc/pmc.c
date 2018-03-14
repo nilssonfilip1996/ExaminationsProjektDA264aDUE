@@ -3,7 +3,7 @@
  *
  * \brief Power Management Controller (PMC) driver for SAM.
  *
- * Copyright (c) 2011-2016 Atmel Corporation. All rights reserved.
+ * Copyright (c) 2011-2015 Atmel Corporation. All rights reserved.
  *
  * \asf_license_start
  *
@@ -1079,7 +1079,7 @@ bool pmc_is_cpck_enabled(void)
  */
 void pmc_enable_cpbmck(void)
 {
-	PMC->PMC_SCER = PMC_SCER_CPBMCK | PMC_SCER_CPKEY_PASSWD;
+	PMC->PMC_SCER = PMC_SCER_CPCK | PMC_SCER_CPKEY_PASSWD;
 }
 
 /**
@@ -1087,7 +1087,7 @@ void pmc_enable_cpbmck(void)
  */
 void pmc_disable_cpbmck(void)
 {
-	PMC->PMC_SCDR = PMC_SCDR_CPBMCK | PMC_SCDR_CPKEY_PASSWD;
+	PMC->PMC_SCDR = PMC_SCDR_CPCK | PMC_SCDR_CPKEY_PASSWD;
 }
 
 /**
@@ -1314,6 +1314,7 @@ void pmc_cp_clr_fast_startup_input(uint32_t ul_inputs)
 }
 #endif
 
+#if (!(SAMG51 || SAMG53 || SAMG54))
 /**
  * \brief Enable Sleep Mode.
  * Enter condition: (WFE or WFI) + (SLEEPDEEP bit = 0) + (LPM bit = 0)
@@ -1331,18 +1332,16 @@ void pmc_enable_sleepmode(uint8_t uc_type)
 
 #if (SAM4S || SAM4E || SAM4N || SAM4C || SAM4CM || SAM4CP || SAMV71 || SAMV70 || SAME70 || SAMS70)
 	UNUSED(uc_type);
-	__DSB();
 	__WFI();
 #else
 	if (uc_type == 0) {
-		__DSB();
 		__WFI();
 	} else {
-		__DSB();
 		__WFE();
 	}
 #endif
 }
+#endif
 
 #if (SAM4S || SAM4E || SAM4N || SAM4C || SAM4CM || SAMG || SAM4CP || SAMV71 || SAMV70 || SAME70 || SAMS70)
 static uint32_t ul_flash_in_wait_mode = PMC_WAIT_MODE_FLASH_DEEP_POWERDOWN;
@@ -1360,8 +1359,8 @@ void pmc_set_flash_in_wait_mode(uint32_t ul_flash_state)
 /**
  * \brief Enable Wait Mode. Enter condition: (WAITMODE bit = 1) + FLPM
  *
- * \note In this function, FLPM will retain, WAITMODE bit will be set,
- * Generally, this function will be called by pmc_sleep() in order to
+ * \note In this function, FLPM will retain, WAITMODE bit will be set, 
+ * Generally, this function will be called by pmc_sleep() in order to 
  * complete all sequence entering wait mode.
  * See \ref pmc_sleep() for entering different sleep modes.
  */
@@ -1372,11 +1371,7 @@ void pmc_enable_waitmode(void)
 	/* Flash in wait mode */
 	i = PMC->PMC_FSMR;
 	i &= ~PMC_FSMR_FLPM_Msk;
-#if !(SAMV71 || SAMV70 || SAME70 || SAMS70)
 	i |= ul_flash_in_wait_mode;
-#else
-	i |= PMC_WAIT_MODE_FLASH_IDLE;
-#endif
 	PMC->PMC_FSMR = i;
 
 	/* Set the WAITMODE bit = 1 */
@@ -1413,7 +1408,6 @@ void pmc_enable_waitmode(void)
 	PMC->PMC_FSMR |= PMC_FSMR_LPM; /* Enter Wait mode */
 	SCB->SCR &= (uint32_t) ~ SCB_SCR_SLEEPDEEP_Msk; /* Deep sleep */
 
-	__DSB();
 	__WFE();
 
 	/* Waiting for MOSCRCEN bit cleared is strongly recommended
@@ -1442,13 +1436,9 @@ void pmc_enable_backupmode(void)
 	SCB->SCR |= SCB_SCR_SLEEPDEEP_Msk;
 #if (SAM4S || SAM4E || SAM4N || SAM4C || SAM4CM || SAM4CP || SAMG55 || SAMV71 || SAMV70 || SAME70 || SAMS70)
 	SUPC->SUPC_CR = SUPC_CR_KEY_PASSWD | SUPC_CR_VROFF_STOP_VREG;
-	uint32_t ul_dummy = SUPC->SUPC_MR;
-	UNUSED(ul_dummy);
-	__DSB();
 	__WFE();
 	__WFI();
 #else
-	__DSB();
 	__WFE();
 #endif
 }
@@ -1550,7 +1540,7 @@ uint32_t pmc_enable_sleepwalking(uint32_t ul_id)
 			return 1;
 		}
 		return 0;
-	}
+	}	
 #if (SAMV71 || SAMV70 || SAME70 || SAMS70)
 	else if ((32 <= ul_id) && (ul_id<= 60)) {
 		ul_id -= 32;
@@ -1566,7 +1556,7 @@ uint32_t pmc_enable_sleepwalking(uint32_t ul_id)
 		}
 		return 0;
 	}
-#endif
+#endif	
 	else {
 		return 1;
 	}
@@ -1588,7 +1578,7 @@ uint32_t pmc_disable_sleepwalking(uint32_t ul_id)
 	if ((7 <= ul_id) && (ul_id<= 29)) {
 #else
 	if ((8 <= ul_id) && (ul_id<= 29)) {
-#endif
+#endif		
 		PMC->PMC_SLPWK_DR0 = 1 << ul_id;
 		return 0;
 	}
@@ -1597,8 +1587,8 @@ uint32_t pmc_disable_sleepwalking(uint32_t ul_id)
 		ul_id -= 32;
 		PMC->PMC_SLPWK_DR1 = 1 << ul_id;
 		return 0;
-	}
-#endif
+	}	
+#endif	
 	else {
 		return 1;
 	}
