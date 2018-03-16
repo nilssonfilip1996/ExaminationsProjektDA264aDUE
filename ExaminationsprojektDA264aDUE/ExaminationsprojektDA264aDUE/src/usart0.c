@@ -1,21 +1,18 @@
 /*
- * uart.c
+ * usart0.c
+ *
+ * For USART communication the TX1 is used. 
  *
  * Created: 2018-02-20 20:07:46
- *  Author: nilss
+ *  Author: Filip Nilsson
  */ 
 #include "asf.h"
 #include "usart0.h"
 #include "DelayFunctions.h"
 #include "createHamming.h"
 
-//define receive parameters
-#define SYNC 0XAA// synchro signal
-
 
 #define TXEN0 6
-#define CHRL0 6
-#define CHRL1 7
 
 #define USART0_BASE_ADDRESS (0x40098000U)
 uint32_t *const ptr_USART0_CR = (uint32_t *) (USART0_BASE_ADDRESS + 0x0000U);	//Control register
@@ -26,26 +23,22 @@ uint32_t *const ptr_USART0_BRGR = (uint32_t *) (USART0_BASE_ADDRESS + 0x0020U);	
 
 void usart0_init(void){
 	pmc_enable_periph_clk(ID_USART0);
-	*ptr_USART0_CR |= (1u<<TXEN0);					//Set TXEN.
-	*ptr_USART0_MR |= (1<<CHRL1) | (1<<CHRL0);
+	*ptr_USART0_CR |= (1u<<TXEN0);					//Enable TXEN.
+	*ptr_USART0_MR |= (1<<6) | (1<<7);
 	*ptr_USART0_MR &= ~((1<<5) | (1<<4));
 	PIOA->PIO_PDR |= (PIO_PA10) | (PIO_PA11);
-	*ptr_USART0_BRGR |= (0b1000100010111<<0);			//Set baudrate(9600). CD==0b1000100011==546
+	*ptr_USART0_BRGR |= (0b1000100010111<<0);			//Set baudrate(1200). CD==0b1000100010111.
 }
 
 void usart0_transmit(unsigned char data){
 	while(!(*ptr_USART0_SR & (1u<<1)));
 	while(!(*ptr_USART0_SR & (1u<<9)));	
-	
-	
-			
+		
 	*ptr_USART0_THR = data;
 }
 
 void usart0_send_Packet(uint8_t addr, unsigned char cmd)
 {
-// 	usart0_transmit(SYNC);//send synchro byte
-// 	delayMicroseconds(10000); 
 	usart0_transmit(addr);//send receiver address
 	delayMicroseconds(10000);
  	usart0_transmit(cmd);//send command
@@ -56,9 +49,9 @@ void usart0_send_Packet(uint8_t addr, unsigned char cmd)
 void usart0_putString(uint8_t addr,char* StringPtr){
 	while (*StringPtr != 0x00){
 		usart0_send_Packet(addr,*StringPtr);
-		delayMicroseconds(1000);
+		delayMicroseconds(10000);
 		StringPtr++;
-	}
-	//usart0_send_Packet(addr,0x00);	
-	delayMicroseconds(1000);
+	}	
+	
+	delayMicroseconds(10000);
 }

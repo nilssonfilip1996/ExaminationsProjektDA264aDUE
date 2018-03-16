@@ -32,3 +32,8 @@ void dac_setup() {
 	dacc_enable_channel(DACC, 1);			//enable DAC1
 }
 
+uint32_t adc_get_value(void) {
+	adc_start(ADC);
+	while((adc_get_status(ADC) & 0x1<<24)==0);  //Wait until DRDY get high
+	return adc_get_latest_value(ADC);
+}

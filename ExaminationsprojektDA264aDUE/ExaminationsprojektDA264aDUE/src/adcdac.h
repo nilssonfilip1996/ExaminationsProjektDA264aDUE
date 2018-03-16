@@ -11,6 +11,7 @@
 
 void adc_setup(void);
 void dac_setup(void);
+uint32_t adc_get_value(void);
 
 
 

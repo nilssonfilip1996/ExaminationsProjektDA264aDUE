@@ -131,6 +131,7 @@ src/ConsoleFunctions.d src/ConsoleFunctions.o: ../src/ConsoleFunctions.c \
  ../src/ASF/common/services/clock/sam3x/pll.h \
  ../src/ASF/sam/drivers/uart/uart.h ../src/ASF/sam/drivers/usart/usart.h \
  ../src/config/conf_uart_serial.h ../src/asf.h \
+ ../src/ASF/sam/drivers/adc/adc.h ../src/ASF/sam/drivers/dacc/dacc.h \
  ../src/ASF/common/services/gpio/gpio.h \
  ../src/ASF/common/services/gpio/sam_gpio/sam_gpio.h \
  ../src/ASF/sam/drivers/pio/pio.h \
@@ -413,6 +414,10 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-no
 ../src/config/conf_uart_serial.h:
 
 ../src/asf.h:
+
+../src/ASF/sam/drivers/adc/adc.h:
+
+../src/ASF/sam/drivers/dacc/dacc.h:
 
 ../src/ASF/common/services/gpio/gpio.h:
 

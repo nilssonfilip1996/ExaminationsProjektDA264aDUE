@@ -1,14 +1,15 @@
 /**
- * \file
- *
- * \brief Empty user application template
- *
- */
+* Main-file of the DUE implementation.
+* The power of an input signal is computed after given intervals.
+* The Power is then seperated into hundreds, tens and singles and sent to a hamming encoder.
+* The resulting 8-bit hamming message is then sent through the USART and eventually received by the .
+*
+*/
 
 /**
- *
- *Author(s): Filip Nilsson and Jesper Anderberg
- */
+*
+*Author(s): Filip Nilsson and Jesper Anderberg
+*/
 #include <asf.h>
 #include "usart0.h"
 #include "DelayFunctions.h"
@@ -16,15 +17,23 @@
 #include "lcdApplication.h"
 #include "createHamming.h"
 #include "consoleFunctions.h"
+#include "conf_tc.h"
+#include "adcdac.h"
+#include "misc.h"
+#include "signalBehandling.h"
+#include <fastmath.h>
 
 #define RADDR 0x01		//0x55
 
 char String[]="XHELLO";
-uint8_t test1[] = {1,0,0,0};
-uint8_t test2[] = {0,1,0,0};
-uint8_t test3[] = {0,0,1,0};
-uint8_t test4[] = {0,0,0,1};
 uint8_t testaddr[] = {1,0,1,0};
+uint32_t sum = 0;
+double rms = 0;
+uint32_t effekt = 0;
+char str1[5];
+
+
+
 
 int main (void)
 {
@@ -35,31 +44,65 @@ int main (void)
 	ioport_init();
 	delayInit();
 	lcdInit();
-	configureConsole();
+	configure_tc();
+	adc_setup();
+	dac_setup();
+	//configureConsole();	//Only for debugging purposes.
+	//ioport_set_pin_dir(CHECK_PIN, IOPORT_DIR_OUTPUT);
+	uint8_t hammingaddr = createHammingCode(testaddr);
 	
-	ioport_enable_pin(PIO_PB27_IDX);
-	ioport_set_pin_dir(PIO_PB27_IDX, IOPORT_DIR_OUTPUT);
 
-	
 	while(1){
-		uint8_t hammingMSG1 = createHammingCode(test1);
-		uint8_t hammingMSG2 = createHammingCode(test2);
-		uint8_t hammingMSG3 = createHammingCode(test3);
-		uint8_t hammingMSG4 = createHammingCode(test4);
-		uint8_t hammingADDR = createHammingCode(testaddr);
- 		usart0_send_Packet(hammingADDR,hammingMSG1);
-		delayMicroseconds(1000);
-		usart0_send_Packet(hammingADDR,hammingMSG2);
- 		delayMicroseconds(10000);
-		usart0_send_Packet(hammingADDR,hammingMSG3);
-		delayMicroseconds(1000);
-		lcdClearDisplay();
-		usart0_send_Packet(hammingADDR,hammingMSG4);
-		delayMicroseconds(10000);
-		usart0_send_Packet(hammingADDR,0x20);
-		delayMicroseconds(10000);
-		//lcdWriteAsciiString("")
-		lcdWrite4DigitNumber(1248);
-	}
+		
+		//printf("offset: %d/n", getDcOffset());
+		if(getCounter() >= 100){
+			tc_stop(TC0,0);
+			int16_t* mvBuff = getMvBuffer();
+			for(int i=0; i<100; i++){
+				sum = sum + (*(mvBuff +i))*(*(mvBuff +i));
+			}
+			rms = sqrt(sum/100)/1000;
+			sum = 0;
+			effekt = 1000*((rms*rms)/10);
+			
+			uint8_t* singles = getSingles(effekt);
+			//printf("singles: %d", singles);
+			uint8_t* tens = getTens(effekt);
+			uint8_t* hundreds = getHundreds(effekt);
+			
+			uint8_t hammingSingle = createHammingCode(singles);
+			uint8_t hammingTens = createHammingCode(tens);
+			uint8_t hammingHundreds = createHammingCode(hundreds);
+			//printf("HAMMING SINGLES %d", hammingSingle);
+			
+			usart0_send_Packet(hammingaddr,hammingHundreds);
+			usart0_send_Packet(hammingaddr,hammingTens);
+			usart0_send_Packet(hammingaddr,hammingSingle);
+			usart0_send_Packet(hammingaddr,0x01);
+			
+			reset_counter();
+			tc_start(TC0,0);
+		}
+		
+		
+			//do nothing
+// 			uint32_t outval = 35;
+// 			uint8_t* singles = getSingles(outval);
+// 		//	printf("singles: %d", singles);
+//  			uint8_t* tens = getTens(outval);
+//  			uint8_t* hundreds = getHundreds(outval);
+// 			
+// 			uint8_t hammingSingle = createHammingCode(singles);
+//  			uint8_t hammingTens = createHammingCode(tens);
+//  			uint8_t hammingHundreds = createHammingCode(hundreds);
+// 			uint8_t hammingaddr = createHammingCode(testaddr);
+// // 			printf("HAMMING SINGLES %d", hammingSingle);
+// // 			uint8_t test = createHammingCode(test1);
+// 			
+// 			usart0_send_Packet(hammingaddr,hammingHundreds);
+// 			usart0_send_Packet(hammingaddr,hammingTens);
+// 			usart0_send_Packet(hammingaddr,hammingSingle);
+			
+		}
 
-}
+	}

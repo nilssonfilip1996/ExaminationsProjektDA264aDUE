@@ -1,6 +1,12 @@
 #include <stdio.h>
 
 
+/*
+* Hamming encoder.
+* Author: Jesper Anderberg
+*
+*/
+
 int dataTosend[8];
 
 uint8_t createHammingCode(uint8_t data[]){
@@ -46,6 +52,5 @@ uint8_t createHammingCode(uint8_t data[]){
 			returnByte|=(1u<<i);
 		}
 	}
-/*	printf("Returnbyte: %x",returnByte);*/
 	return returnByte;
 }

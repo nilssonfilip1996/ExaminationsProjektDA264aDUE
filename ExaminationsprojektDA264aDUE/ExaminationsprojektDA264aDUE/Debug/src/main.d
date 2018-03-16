@@ -1,5 +1,5 @@
 src/main.d src/main.o: ../src/main.c ../src/asf.h \
- ../src/ASF/sam/utils/compiler.h \
+ ../src/ASF/sam/drivers/adc/adc.h ../src/ASF/sam/utils/compiler.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\lib\gcc\arm-none-eabi\6.3.1\include\stddef.h \
  ../src/ASF/common/utils/parts.h \
  ../src/ASF/sam/utils/preprocessor/preprocessor.h \
@@ -117,7 +117,7 @@ src/main.d src/main.o: ../src/main.c ../src/asf.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\alloca.h \
  ../src/ASF/common/utils/interrupt.h \
  ../src/ASF/common/utils/interrupt/interrupt_sam_nvic.h \
- ../src/ASF/sam/utils/status_codes.h \
+ ../src/ASF/sam/utils/status_codes.h ../src/ASF/sam/drivers/dacc/dacc.h \
  ../src/ASF/common/services/gpio/gpio.h \
  ../src/ASF/common/services/gpio/sam_gpio/sam_gpio.h \
  ../src/ASF/sam/drivers/pio/pio.h ../src/ASF/common/boards/board.h \
@@ -139,9 +139,15 @@ src/main.d src/main.o: ../src/main.c ../src/asf.h \
  ../src/config/conf_uart_serial.h ../src/ASF/sam/drivers/tc/tc.h \
  ../src/ASF/sam/drivers/pio/pio_handler.h ../src/usart0.h \
  ../src/DelayFunctions.h ../src/LCDFunctions.h ../src/asf.h \
- ../src/lcdApplication.h ../src/createHamming.h ../src/consoleFunctions.h
+ ../src/lcdApplication.h ../src/createHamming.h ../src/consoleFunctions.h \
+ ../src/conf_tc.h ../src/adcdac.h ../src/misc.h ../src/signalBehandling.h \
+ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\fastmath.h \
+ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\math.h \
+ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\machine\fastmath.h
 
 ../src/asf.h:
+
+../src/ASF/sam/drivers/adc/adc.h:
 
 ../src/ASF/sam/utils/compiler.h:
 
@@ -381,6 +387,8 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-no
 
 ../src/ASF/sam/utils/status_codes.h:
 
+../src/ASF/sam/drivers/dacc/dacc.h:
+
 ../src/ASF/common/services/gpio/gpio.h:
 
 ../src/ASF/common/services/gpio/sam_gpio/sam_gpio.h:
@@ -444,3 +452,17 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-no
 ../src/createHamming.h:
 
 ../src/consoleFunctions.h:
+
+../src/conf_tc.h:
+
+../src/adcdac.h:
+
+../src/misc.h:
+
+../src/signalBehandling.h:
+
+c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\fastmath.h:
+
+c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\math.h:
+
+c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\machine\fastmath.h:

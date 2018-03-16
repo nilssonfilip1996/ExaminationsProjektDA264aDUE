@@ -1,6 +1,6 @@
 src/lcdApplication.d src/lcdApplication.o: ../src/lcdApplication.c \
  ../src/lcdApplication.h ../src/LCDFunctions.h ../src/asf.h \
- ../src/ASF/sam/utils/compiler.h \
+ ../src/ASF/sam/drivers/adc/adc.h ../src/ASF/sam/utils/compiler.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\lib\gcc\arm-none-eabi\6.3.1\include\stddef.h \
  ../src/ASF/common/utils/parts.h \
  ../src/ASF/sam/utils/preprocessor/preprocessor.h \
@@ -118,7 +118,7 @@ src/lcdApplication.d src/lcdApplication.o: ../src/lcdApplication.c \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\alloca.h \
  ../src/ASF/common/utils/interrupt.h \
  ../src/ASF/common/utils/interrupt/interrupt_sam_nvic.h \
- ../src/ASF/sam/utils/status_codes.h \
+ ../src/ASF/sam/utils/status_codes.h ../src/ASF/sam/drivers/dacc/dacc.h \
  ../src/ASF/common/services/gpio/gpio.h \
  ../src/ASF/common/services/gpio/sam_gpio/sam_gpio.h \
  ../src/ASF/sam/drivers/pio/pio.h ../src/ASF/common/boards/board.h \
@@ -145,6 +145,8 @@ src/lcdApplication.d src/lcdApplication.o: ../src/lcdApplication.c \
 ../src/LCDFunctions.h:
 
 ../src/asf.h:
+
+../src/ASF/sam/drivers/adc/adc.h:
 
 ../src/ASF/sam/utils/compiler.h:
 
@@ -383,6 +385,8 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-no
 ../src/ASF/common/utils/interrupt/interrupt_sam_nvic.h:
 
 ../src/ASF/sam/utils/status_codes.h:
+
+../src/ASF/sam/drivers/dacc/dacc.h:
 
 ../src/ASF/common/services/gpio/gpio.h:
 

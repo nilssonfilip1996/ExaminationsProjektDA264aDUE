@@ -8,8 +8,6 @@
 #ifndef LCDAPPLICATION_H_
 #define LCDAPPLICATION_H_
 
-
-
 int lcdWrite4DigitNumber(int number);
 int lcdWriteAsciiString(const char *string);
 
