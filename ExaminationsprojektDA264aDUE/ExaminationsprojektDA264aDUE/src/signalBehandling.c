@@ -2,7 +2,7 @@
 * sampel_int.c
 *
 * Low-pass FIR-filter implementation(0-1000Hz).
-* 
+*
 *  Author: Tommy och Filip och Jesper
 */
 
@@ -18,6 +18,7 @@
 
 
 static float xbuff[M+1]={0};
+//FIR-koefficients.
 static float b[M+1] ={  -0.008501776042313,-0.002743409346133, 0.007488801099629,  0.01765326667963,
 	0.01657598715714,  0.00263784038596, -0.01119863755238, -0.00938804134475,
 	0.007734114648412,  0.02066577307441,  0.01087858147431, -0.01530120118036,
@@ -28,16 +29,16 @@ static float b[M+1] ={  -0.008501776042313,-0.002743409346133, 0.007488801099629
 	0.04082545906818,  0.03094029359488,-0.007200440660156, -0.02834002249943,
 	-0.01530120118036,  0.01087858147431,  0.02066577307441, 0.007734114648412,
 	-0.00938804134475, -0.01119863755238,  0.00263784038596,  0.01657598715714,
-	0.01765326667963, 0.007488801099629,-0.002743409346133,-0.008501776042313};			 //Initierar b koefficienterna till 1/(M+1).
-	
-	static uint8_t offsetCounter = 0;
-	static uint32_t offsetBuff[nbrOfSamples] = {0};	//Array with samples(including offset!).
-		
-	static uint32_t offsetSum = 0;
-	static uint16_t dcOffset = 0;
-	
-	static uint8_t sampleCounter = 0;
-	static int16_t mvBuffer[nbrOfSamples] = {0};	//Array with mV(Without offset!).
+	0.01765326667963, 0.007488801099629,-0.002743409346133,-0.008501776042313};			 
+
+static uint8_t offsetCounter = 0;
+static uint32_t offsetBuff[nbrOfSamples] = {0};	//Array with samples(including offset!).
+
+static uint32_t offsetSum = 0;
+static uint16_t dcOffset = 0;
+
+static uint8_t sampleCounter = 0;
+static int16_t mvBuffer[nbrOfSamples] = {0};	//Array with mV(Without offset!).
 
 
 /**
@@ -95,10 +96,9 @@ void TC0_Handler(void)
 	/************************************************************************/
 	if(sampleCounter<nbrOfSamples){
 		int32_t ov = outvalue;  //uint32 ---> int32. Brutally important.
-		mvBuffer[sampleCounter] = ((ov-dcOffset)*1000)/1240; //1.24 is ratio between ADC-values and actual voltage.
+		mvBuffer[sampleCounter] = ((ov-dcOffset)*1000)/1240; //	1/1.24 is ratio between ADC-values and actual voltage.
 		sampleCounter++;
 	}
-	
 	dacc_write_conversion_data(DACC,outvalue);	//send output value to DAC
 	//ioport_set_pin_level(CHECK_PIN,LOW);		//put test pin LOW
 }
@@ -117,4 +117,4 @@ int16_t* getMvBuffer(void){
 
 void reset_counter(void){
 	sampleCounter = 0;
-} 
+}

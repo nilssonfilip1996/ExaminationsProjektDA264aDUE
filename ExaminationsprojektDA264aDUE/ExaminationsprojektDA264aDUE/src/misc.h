@@ -2,7 +2,7 @@
  * misc.h
  *
  * Created: 2018-03-14 17:48:51
- *  Author: nilss
+ *  Author:  Jesper Anderberg and Filip Nilsson
  */ 
 
 

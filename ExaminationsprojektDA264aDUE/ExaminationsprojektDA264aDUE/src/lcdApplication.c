@@ -1,7 +1,7 @@
 /*
  * lcdApplication.c
  *
- * Created: 2015-09-10 08:44:50
+ * Created: 2018-09-10 08:44:50
  *  Author: Filip Nilsson & Jesper Anderberg
  */ 
 

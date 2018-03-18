@@ -1,8 +1,8 @@
 /*
- * uart.h
+ * usart0.h
  *
  * Created: 2018-02-20 20:08:06
- *  Author: nilss
+ *  Author: Filip Nilsson
  */ 
 
 

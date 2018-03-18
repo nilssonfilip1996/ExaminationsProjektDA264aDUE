@@ -2,7 +2,8 @@
 * Main-file of the DUE implementation.
 * The power of an input signal is computed after given intervals.
 * The Power is then seperated into hundreds, tens and singles and sent to a hamming encoder.
-* The resulting 8-bit hamming message is then sent through the USART and eventually received by the .
+* The resulting 8-bit hamming message is then sent through the USART and eventually received by the.
+* 
 *
 */
 
@@ -23,7 +24,7 @@
 #include "signalBehandling.h"
 #include <fastmath.h>
 
-#define RADDR 0x01		//0x55
+#define RADDR 0x01		
 
 char String[]="XHELLO";
 uint8_t testaddr[] = {1,0,1,0};

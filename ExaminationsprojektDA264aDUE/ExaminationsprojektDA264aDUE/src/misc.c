@@ -2,7 +2,7 @@
 * misc.c
 *
 * Created: 2018-03-14 17:48:34
-*  Author: nilss
+*  Author: Jesper Anderberg and Filip Nilsson
 */
 #include "asf.h"
 uint8_t zero[4] = {0,0,0,0};
@@ -16,9 +16,6 @@ uint8_t seven[4] = {1,1,1,0};
 uint8_t eight[4] = {0,0,0,1};
 uint8_t nine[4] = {1,0,0,1};
 	
-
-	
-
 
 uint8_t *getHundreds(uint32_t outval){
 	uint8_t temp =outval%100;

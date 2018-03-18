@@ -31,7 +31,7 @@ void usart0_init(void){
 }
 
 void usart0_transmit(unsigned char data){
-	while(!(*ptr_USART0_SR & (1u<<1)));
+	while(!(*ptr_USART0_SR & (1u<<1)));		//Wait for an empty tx-buffer.
 	while(!(*ptr_USART0_SR & (1u<<9)));	
 		
 	*ptr_USART0_THR = data;
@@ -39,19 +39,18 @@ void usart0_transmit(unsigned char data){
 
 void usart0_send_Packet(uint8_t addr, unsigned char cmd)
 {
-	usart0_transmit(addr);//send receiver address
+	usart0_transmit(addr);		//send receiver address
 	delayMicroseconds(10000);
- 	usart0_transmit(cmd);//send command
+ 	usart0_transmit(cmd);		//send command
  	delayMicroseconds(10000);
 }
 
 
-void usart0_putString(uint8_t addr,char* StringPtr){
+void usart0_putString(uint8_t addr,char* StringPtr){		//Used for early testing
 	while (*StringPtr != 0x00){
 		usart0_send_Packet(addr,*StringPtr);
 		delayMicroseconds(10000);
 		StringPtr++;
 	}	
-	
 	delayMicroseconds(10000);
 }
